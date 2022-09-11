@@ -3,6 +3,8 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class Server {
@@ -11,6 +13,8 @@ public class Server {
     final int PORT = 8000;
     DataOutputStream out = null;
     DataInputStream in = null;
+    Map<Integer, String> listUsers = new HashMap<>();
+
 
     ServerSocket serverSocket = null;
     Socket client = null;
@@ -22,9 +26,9 @@ public class Server {
       while(true){
         client = serverSocket.accept();
         in = new DataInputStream(client.getInputStream());
-
         print(String.format("The client was connected on port %s ", client.getPort()));
         print("Waiting for messages: ");
+
         String mess = in.readUTF();
         print(String.format("%s : %s", client.getPort(), mess));
         if(mess.equals("quit")){
